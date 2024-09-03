@@ -4,6 +4,7 @@ export const PATH = {
 
   // Events
   breakpoint: "/events/breakpoint",
+  breakpointScan: "/events/breakpoint/scan",
 };
 
 export const replacePathKeys = (

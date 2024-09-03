@@ -24,20 +24,20 @@ export const IconButton = ({ children, sx, ...rest }: IIconButton) => {
         "&:hover": {
           background: "transparent",
           "&.MuiButton-text": {
-            color: theme.palette.green[60],
+            color: theme.palette.green?.[60],
           },
           "& path": {
-            fill: theme.palette.green[60],
+            fill: theme.palette.green?.[60],
           },
         },
         "&:focus": {
           "&.MuiButton-text": {
-            color: theme.palette.green[80],
+            color: theme.palette.green?.[80],
           },
           background: "transparent",
 
           "& path": {
-            fill: theme.palette.green[80],
+            fill: theme.palette.green?.[80],
           },
         },
         "&:disabled": {

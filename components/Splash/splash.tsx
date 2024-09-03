@@ -1,7 +1,21 @@
 "use client";
 
-import { Box, keyframes, Stack, useTheme } from "@mui/material";
+import {
+  Box,
+  keyframes,
+  Stack,
+  styled,
+  Typography,
+  TypographyProps,
+  useTheme,
+} from "@mui/material";
 import Image from "next/image";
+import { LoaderDots } from "../Loader";
+
+const SplashText = styled(Typography)<TypographyProps>(({ theme }) => ({
+  ...theme.typography.base.xxl,
+  color: theme.palette.neutral[0],
+}));
 
 export const Splash = () => {
   const theme = useTheme();
@@ -21,20 +35,14 @@ export const Splash = () => {
   return (
     <Stack
       sx={{
-        display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: "100%",
       }}
     >
-      <Box
-        sx={{
-          animation: `${pulse} 800ms ease-in-out`,
-          animationIterationCount: "infinite",
-        }}
-      >
+      <Box>
         <Image
-          src="/assets/the-bobo-bot.jpeg"
+          src="/assets/logo/animated.gif"
           alt="splash"
           width={500}
           height={500}
@@ -46,6 +54,17 @@ export const Splash = () => {
           priority
         />
       </Box>
+      <Stack rowGap={4}>
+        <SplashText
+          sx={{
+            animation: `${pulse} 1s ease-in-out`,
+            animationIterationCount: "infinite",
+          }}
+        >
+          Don&apos;t blink!
+        </SplashText>
+        <LoaderDots />
+      </Stack>
     </Stack>
   );
 };

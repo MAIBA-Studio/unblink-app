@@ -20,7 +20,7 @@ export const Container = ({ children, sx }: IContainer) => {
         maxWidth: "560px",
         boxSizing: "border-box",
         position: "relative",
-        padding: "24px",
+        padding: "16px",
         overflowX: "hidden",
         ...sx,
       }}

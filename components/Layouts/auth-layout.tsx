@@ -1,8 +1,9 @@
 "use client";
 
+import { Container, SolidButton, TextInput, WalletButton } from "@/components";
 import { PATH } from "@/lib/routes";
 import { shouldNotForwardPropsWithKeys } from "@/lib/utils";
-// import { useStore } from "@/store";
+import { useWallet } from "@jup-ag/wallet-adapter";
 import {
   AccountCircle as AccountCircleIcon,
   ChevronLeft as ChevronLeftIcon,
@@ -12,7 +13,6 @@ import {
   Menu as MenuIcon,
 } from "@mui/icons-material";
 import {
-  alpha,
   Box,
   Drawer,
   IconButton,
@@ -21,7 +21,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
@@ -40,7 +40,7 @@ const LinkTypography = styled(Typography, {
   borderRadius: theme.spacing(2),
   color: selected ? theme.palette.neutral[80] : theme.palette.neutral[0],
   padding: theme.spacing(2),
-  background: selected ? theme.palette.green[20] : "transparent",
+  background: selected ? theme.palette.warning.main : "transparent",
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -57,6 +57,7 @@ const drawerWidth = 320;
 export const AuthLayout = ({ children }: IAuthLayout) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const { connected } = useWallet();
   // const { user, setUser } = useStore();
   const pathname = usePathname();
 
@@ -68,27 +69,79 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
     setOpen(false);
   };
 
-  // if (!user && (isMutatingVerify || isMutatingLogin)) {
-  //   return (
-  //     <Container>
-  //       <Splash />
-  //     </Container>
-  //   );
-  // }
+  // TODO: Check the user if they are existing, if not, show the username input
+  if (connected) {
+    return (
+      <Container>
+        <Stack
+          alignItems={"center"}
+          justifyContent={"center"}
+          height={"100%"}
+          rowGap={2}
+        >
+          <TextInput label="Username" placeholder="Enter your username" />
+          <Typography
+            sx={{
+              ...theme.typography.base.md,
+              color: theme.palette.neutral[20],
+            }}
+          >
+            This username will be used to identify you as the photographer of
+            all your photos. It will be included in the metadata of the Photo
+            NFT that will be minted.
+          </Typography>
+
+          {/* TODO: Once submitted, in the backend, we should redirect to the profile page or breakpoint page */}
+          <SolidButton
+            preset="orange"
+            sx={{
+              marginTop: theme.spacing(4),
+              width: "100%",
+            }}
+          >
+            Submit
+          </SolidButton>
+        </Stack>
+      </Container>
+    );
+  }
+
+  if (!connected) {
+    return (
+      <Container>
+        <Stack
+          alignItems={"center"}
+          justifyContent={"center"}
+          height={"100%"}
+          rowGap={2}
+        >
+          <Typography
+            sx={{
+              ...theme.typography.base.xxl,
+              color: theme.palette.neutral[0],
+            }}
+          >
+            To continue,
+          </Typography>
+          <WalletButton />
+        </Stack>
+      </Container>
+    );
+  }
 
   return (
     <>
       <Stack
         sx={{
           position: "fixed",
-          boxShadow: theme.shadows[2],
-          padding: theme.spacing(1, 4),
+          boxShadow: theme.shadows[4],
+          padding: theme.spacing(1, 2),
           width: "90%",
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
           margin: "auto",
-          background: theme.palette.neutral[60],
+          background: theme.palette.neutral[80],
           borderRadius: theme.spacing(1),
           top: 16,
           left: 0,
@@ -96,14 +149,13 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
           zIndex: 1000,
         }}
       >
-        <Typography
-          sx={{
-            ...theme.typography.base.xl,
-            color: theme.palette.green[20],
-          }}
-        >
-          Unblink.app
-        </Typography>
+        <Image
+          src={"/assets/logo/full-logo.png"}
+          alt={"Unblink.app"}
+          width={100}
+          height={100}
+          style={{ height: "100%", width: "fit-content" }}
+        />
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -112,6 +164,7 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
         >
           <MenuIcon
             sx={{
+              color: theme.palette.warning.main,
               width: 40,
               height: 40,
             }}
@@ -124,8 +177,7 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
           width: drawerWidth,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            border: `1px solid ${alpha(theme.palette.neutral[40], 0.5)}`,
-            boxShadow: theme.shadows[2],
+            boxShadow: theme.shadows[4],
             background: theme.palette.neutral[80],
             width: drawerWidth,
           },
@@ -186,6 +238,7 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
       <Box
         sx={{
           marginTop: theme.spacing(12),
+          zIndex: 999,
         }}
       >
         {children}

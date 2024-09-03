@@ -5,6 +5,8 @@ import {
   LoaderSkeleton,
   OutlineButton,
   SolidButton,
+  TextInput,
+  WalletButton,
 } from "@/components";
 import { useToast } from "@/providers/toast-provider";
 import { Stack, Typography, useTheme } from "@mui/material";
@@ -50,9 +52,10 @@ const StorybookPage = () => {
   };
 
   return (
-    <Stack rowGap={4} padding={4}>
+    <Stack rowGap={4} padding={4} flexWrap={"wrap"}>
       <Typography sx={theme.typography.base.xl}>Solid Buttons</Typography>
       <Stack flexDirection={"row"} columnGap={2}>
+        <WalletButton />
         <SolidButton preset={"purple"}>Purple</SolidButton>
         <SolidButton preset={"green"}>Green</SolidButton>
         <SolidButton preset={"cyan"}>Cyan</SolidButton>
@@ -93,6 +96,11 @@ const StorybookPage = () => {
         <OutlineButton preset={"neutral"} disabled>
           Neutral
         </OutlineButton>
+      </Stack>
+
+      <Stack rowGap={2}>
+        <Typography sx={theme.typography.base.xl}>Text Input</Typography>
+        <TextInput label="Username" />
       </Stack>
 
       <Typography sx={theme.typography.base.xl}>Loaders</Typography>

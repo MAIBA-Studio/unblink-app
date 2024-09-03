@@ -3,7 +3,7 @@
 import { Button, ButtonProps, styled, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 
-type SolidButtonColor = "green" | "cyan" | "neutral" | "purple";
+type SolidButtonColor = "green" | "cyan" | "neutral" | "purple" | "orange";
 
 const ColorButton = styled(Button)<ButtonProps & { preset: SolidButtonColor }>(
   ({ theme, preset }) => {
@@ -11,34 +11,34 @@ const ColorButton = styled(Button)<ButtonProps & { preset: SolidButtonColor }>(
       case "green":
         return {
           color: theme.palette.neutral[80],
-          backgroundColor: `${theme.palette.green[60]}`,
+          backgroundColor: `${theme.palette.green?.[60]}`,
           "&:hover:not(:disabled)": {
-            backgroundColor: theme.palette.green[40],
+            backgroundColor: theme.palette.green?.[40],
           },
           "&:active:not(:disabled)": {
-            backgroundColor: theme.palette.green[80],
+            backgroundColor: theme.palette.green?.[80],
           },
           "&:disabled": {
             opacity: 0.5,
             color: theme.palette.neutral[80],
-            backgroundColor: theme.palette.green[60],
+            backgroundColor: theme.palette.green?.[60],
           },
         };
 
       case "cyan":
         return {
           color: theme.palette.neutral[80],
-          backgroundColor: `${theme.palette.cyan[60]}`,
+          backgroundColor: `${theme.palette.cyan?.[60]}`,
           "&:hover:not(:disabled)": {
-            backgroundColor: theme.palette.cyan[40],
+            backgroundColor: theme.palette.cyan?.[40],
           },
           "&:active:not(:disabled)": {
-            backgroundColor: theme.palette.cyan[80],
+            backgroundColor: theme.palette.cyan?.[80],
           },
           "&:disabled": {
             opacity: 0.5,
             color: theme.palette.neutral[80],
-            backgroundColor: theme.palette.cyan[60],
+            backgroundColor: theme.palette.cyan?.[60],
           },
         };
 
@@ -59,23 +59,40 @@ const ColorButton = styled(Button)<ButtonProps & { preset: SolidButtonColor }>(
           },
         };
 
-      case "purple":
-      default:
+      case "orange":
         return {
-          color: theme.palette.purple[0],
-          backgroundColor: `${theme.palette.purple[60]}`,
+          color: theme.palette.neutral[80],
+          backgroundColor: `${theme.palette.warning.main}`,
           "&:hover:not(:disabled)": {
-            color: theme.palette.neutral[80],
-            backgroundColor: theme.palette.purple[40],
+            backgroundColor: theme.palette.warning.main,
           },
           "&:active:not(:disabled)": {
-            color: theme.palette.purple[0],
-            backgroundColor: theme.palette.purple[80],
+            backgroundColor: theme.palette.warning.main,
           },
           "&:disabled": {
             opacity: 0.5,
-            color: theme.palette.purple[0],
-            backgroundColor: theme.palette.purple[60],
+            color: theme.palette.neutral[80],
+            backgroundColor: theme.palette.warning.main,
+          },
+        };
+
+      case "purple":
+      default:
+        return {
+          color: theme.palette.purple?.[0],
+          backgroundColor: `${theme.palette.purple?.[60]}`,
+          "&:hover:not(:disabled)": {
+            color: theme.palette.neutral[80],
+            backgroundColor: theme.palette.purple?.[40],
+          },
+          "&:active:not(:disabled)": {
+            color: theme.palette.purple?.[0],
+            backgroundColor: theme.palette.purple?.[80],
+          },
+          "&:disabled": {
+            opacity: 0.5,
+            color: theme.palette.purple?.[0],
+            backgroundColor: theme.palette.purple?.[60],
           },
         };
     }

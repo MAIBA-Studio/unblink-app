@@ -1,6 +1,7 @@
 "use client";
 
 import { PaletteOptions } from "@mui/material/styles/createPalette";
+import breakpointPalette from "./event-palettes/breakpoint-palette";
 
 interface PaletteColorVariants {
   0: string;
@@ -21,48 +22,64 @@ interface NeutralColorVariants {
 interface GradientVariants {
   blue: string;
   purple: string;
+  solana?: string;
 }
 
 declare module "@mui/material/styles/createPalette" {
   interface PaletteColor {
-    green: string;
-    purple: string;
-    blue: string;
-    cyan: string;
+    green?: string;
+    purple?: string;
+    blue?: string;
+    pink?: string;
+    lightPurple?: string;
+    cyan?: string;
     neutral: string;
-    success: string;
-    warning: string;
-    danger: string;
-    info: string;
-    gradient: string;
-    transparent: string;
+    success?: string;
+    warning?: string;
+    danger?: string;
+    info?: string;
+    gradient?: string;
+    transparent?: string;
+
+    // event palettes
+    breakpoint?: string;
   }
 
   interface Palette {
-    green: PaletteColorVariants;
-    purple: PaletteColorVariants;
-    blue: PaletteColorVariants;
-    cyan: PaletteColorVariants;
+    green?: PaletteColorVariants;
+    purple?: PaletteColorVariants;
+    blue?: PaletteColorVariants;
+    pink?: PaletteColorVariants;
+    lightPurple?: PaletteColorVariants;
+    cyan?: PaletteColorVariants;
     neutral: NeutralColorVariants;
     success: PaletteColor;
     warning: PaletteColor;
     danger: PaletteColor;
     info: PaletteColor;
-    gradient: GradientVariants;
+    gradient?: GradientVariants;
+
+    // event palettes
+    breakpoint?: PaletteOptions;
   }
 
   // allow configuration using `createTheme`
   interface PaletteOptions {
-    green: PaletteColorVariants;
-    purple: PaletteColorVariants;
-    blue: PaletteColorVariants;
-    cyan: PaletteColorVariants;
+    green?: PaletteColorVariants;
+    purple?: PaletteColorVariants;
+    blue?: PaletteColorVariants;
+    pink?: PaletteColorVariants;
+    lightPurple?: PaletteColorVariants;
+    cyan?: PaletteColorVariants;
     neutral: NeutralColorVariants;
     success?: PaletteColorOptions;
     warning?: PaletteColorOptions;
-    danger: PaletteColorOptions;
+    danger?: PaletteColorOptions;
     info?: PaletteColorOptions;
-    gradient: GradientVariants;
+    gradient?: GradientVariants;
+
+    // event palettes
+    breakpoint?: PaletteOptions;
   }
 }
 
@@ -71,6 +88,8 @@ declare module "@mui/material" {
     green: true;
     purple: true;
     blue: true;
+    pink: true;
+    lightPurple: true;
     cyan: true;
     neutral: true;
     success: true;
@@ -78,6 +97,7 @@ declare module "@mui/material" {
     danger: true;
     info: true;
     gradient: true;
+    breakpoint: true;
   }
 }
 
@@ -116,9 +136,9 @@ const cyan: PaletteColorVariants = {
 const neutral: NeutralColorVariants = {
   0: "#F5F5F5",
   20: "#D2D8E0",
-  40: "#4E5C67", // Deep, strong blue-grey, approaching charcoal
-  60: "#1F2A32", // Even darker, nearing black, for deep contrast
-  80: "#0A0F13", // Nearly pure black, with the slightest blue undertone
+  40: "#708090", // Deep, strong blue-grey, approaching charcoal
+  60: "#4E5C67", // Even darker, nearing black, for deep contrast
+  80: "#333333", // Nearly pure black, with the slightest blue undertone
 };
 
 const success = {
@@ -128,8 +148,8 @@ const success = {
 };
 
 const warning = {
-  main: "#EB9147",
-  dark: "#BA6F2D",
+  main: "#D4A017",
+  dark: "#8B4513",
   light: "#FFB06F",
 };
 
@@ -162,6 +182,9 @@ const palette: PaletteOptions = {
   danger,
   info,
   gradient,
+
+  // event palettes
+  breakpoint: breakpointPalette,
 } as const;
 
 export default palette;

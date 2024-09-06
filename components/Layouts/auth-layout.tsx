@@ -23,7 +23,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 interface IAuthLayout {
   children: ReactNode;
@@ -59,6 +59,40 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
   const { connected } = useWallet();
   // const { user, setUser } = useStore();
   const pathname = usePathname();
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = useCallback(() => {
+    const currentScrollY = scrollContainerRef.current?.scrollTop || 0;
+    const scrollThreshold = 1;
+
+    if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+      setIsVisible(false);
+    } else if (currentScrollY < lastScrollY) {
+      setIsVisible(true);
+    }
+
+    setLastScrollY(currentScrollY);
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    // For desktop
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // For mobile
+    window.addEventListener("touchmove", handleScroll, { passive: true });
+    window.addEventListener("touchend", handleScroll, { passive: true });
+
+    // Trigger initial check
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("touchmove", handleScroll);
+      window.removeEventListener("touchend", handleScroll);
+    };
+  }, [handleScroll]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -129,7 +163,18 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
   }
 
   return (
-    <>
+    <div
+      ref={scrollContainerRef}
+      style={{
+        height: "100vh",
+        overflowY: "auto",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}
+    >
       <Stack
         sx={{
           position: "fixed",
@@ -146,6 +191,8 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
           left: 0,
           right: 0,
           zIndex: 1000,
+          transition: "transform 0.3s ease-in-out",
+          transform: isVisible ? "translateY(0)" : "translateY(-200%)",
         }}
       >
         <Link href={PATH.landing}>
@@ -242,12 +289,13 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
 
       <Box
         sx={{
-          marginTop: theme.spacing(12),
+          margin: theme.spacing(12, 0),
+          padding: theme.spacing(2),
           zIndex: 999,
         }}
       >
         {children}
       </Box>
-    </>
+    </div>
   );
 };

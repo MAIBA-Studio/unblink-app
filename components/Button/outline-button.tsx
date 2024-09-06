@@ -15,6 +15,7 @@ type OutlineButtonColor =
   | "cyan"
   | "neutral"
   | "purple"
+  | "warning"
   | "gradient-solana"
   | "gradient-purple";
 
@@ -82,6 +83,27 @@ const OutlineButtonBase = styled(Button)<
           color: theme.palette.purple?.[60],
           backgroundColor: `transparent`,
           border: `1px solid ${theme.palette.purple?.[60]}`,
+        },
+      };
+
+    case "warning":
+      return {
+        color: theme.palette.warning.main,
+        backgroundColor: `transparent`,
+        border: `1px solid ${theme.palette.warning.main}`,
+        "&:hover:not(:disabled)": {
+          border: `1px solid ${theme.palette.warning.light}`,
+          backgroundColor: alpha(theme.palette.neutral[20], 0.05),
+        },
+        "&:active:not(:disabled)": {
+          border: `1px solid ${theme.palette.warning.dark}`,
+          backgroundColor: alpha(theme.palette.neutral[40], 0.05),
+        },
+        "&:disabled": {
+          opacity: 0.5,
+          color: theme.palette.warning.main,
+          backgroundColor: `transparent`,
+          border: `1px solid ${theme.palette.warning.main}`,
         },
       };
 

@@ -51,7 +51,7 @@ const StyledButton = styled(Button, {
   },
   borderRadius: theme.spacing(4),
   border: `1px solid ${theme.palette.warning.main}`,
-  padding: theme.spacing(1.25, 2.5),
+  padding: theme.spacing(1, 2),
   display: "inline-flex",
   gap: theme.spacing(1),
   justifyContent: "center",
@@ -100,9 +100,9 @@ export const WalletButton = ({
     >
       {!connected ? (
         connecting ? (
-          <Typography sx={theme.typography.base.lg}>Connecting...</Typography>
+          <Typography sx={theme.typography.base.md}>Connecting...</Typography>
         ) : (
-          <Typography sx={theme.typography.base.lg}>Connect Wallet</Typography>
+          <Typography sx={theme.typography.base.md}>Connect Wallet</Typography>
         )
       ) : (
         connected &&
@@ -114,7 +114,7 @@ export const WalletButton = ({
               width={20}
               height={20}
             />
-            <Typography sx={theme.typography.base.lg}>
+            <Typography sx={theme.typography.base.md}>
               {shortenAddress(userWallet?.toBase58())}
             </Typography>
           </>

@@ -1,11 +1,10 @@
 "use client";
 
-import { Container, SolidButton, TextInput, WalletButton } from "@/components";
+import { Container, WalletButton } from "@/components";
 import { PATH } from "@/lib/routes";
 import { shouldNotForwardPropsWithKeys } from "@/lib/utils";
 import { useWallet } from "@jup-ag/wallet-adapter";
 import {
-  AccountCircle as AccountCircleIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   EventAvailable as EventAvailableIcon,
@@ -70,41 +69,41 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
   };
 
   // TODO: Check the user if they are existing, if not, show the username input
-  if (connected) {
-    return (
-      <Container>
-        <Stack
-          alignItems={"center"}
-          justifyContent={"center"}
-          height={"100%"}
-          rowGap={2}
-        >
-          <TextInput label="Username" placeholder="Enter your username" />
-          <Typography
-            sx={{
-              ...theme.typography.base.md,
-              color: theme.palette.neutral[20],
-            }}
-          >
-            This username will be used to identify you as the photographer of
-            all your photos. It will be included in the metadata of the Photo
-            NFT that will be minted.
-          </Typography>
+  // if (connected) {
+  //   return (
+  //     <Container>
+  //       <Stack
+  //         alignItems={"center"}
+  //         justifyContent={"center"}
+  //         height={"100%"}
+  //         rowGap={2}
+  //       >
+  //         <TextInput label="Username" placeholder="Enter your username" />
+  //         <Typography
+  //           sx={{
+  //             ...theme.typography.base.md,
+  //             color: theme.palette.neutral[20],
+  //           }}
+  //         >
+  //           This username will be used to identify you as the photographer of
+  //           all your photos. It will be included in the metadata of the Photo
+  //           NFT that will be minted.
+  //         </Typography>
 
-          {/* TODO: Once submitted, in the backend, we should redirect to the profile page or breakpoint page */}
-          <SolidButton
-            preset="orange"
-            sx={{
-              marginTop: theme.spacing(4),
-              width: "100%",
-            }}
-          >
-            Submit
-          </SolidButton>
-        </Stack>
-      </Container>
-    );
-  }
+  //         {/* TODO: Once submitted, in the backend, we should redirect to the profile page or breakpoint page */}
+  //         <SolidButton
+  //           preset="orange"
+  //           sx={{
+  //             marginTop: theme.spacing(4),
+  //             width: "100%",
+  //           }}
+  //         >
+  //           Submit
+  //         </SolidButton>
+  //       </Stack>
+  //     </Container>
+  //   );
+  // }
 
   if (!connected) {
     return (
@@ -149,27 +148,32 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
           zIndex: 1000,
         }}
       >
-        <Image
-          src={"/assets/logo/full-logo.png"}
-          alt={"Unblink.app"}
-          width={100}
-          height={100}
-          style={{ height: "100%", width: "fit-content" }}
-        />
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="end"
-          onClick={handleDrawerOpen}
-        >
-          <MenuIcon
-            sx={{
-              color: theme.palette.warning.main,
-              width: 40,
-              height: 40,
-            }}
+        <Link href={PATH.landing}>
+          <Image
+            src={"/assets/logo/full-logo.png"}
+            alt={"Unblink.app"}
+            width={100}
+            height={100}
+            style={{ height: "100%", width: "fit-content" }}
           />
-        </IconButton>
+        </Link>
+
+        <Stack flexDirection={"row"} alignItems={"center"} columnGap={2}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="end"
+            onClick={handleDrawerOpen}
+          >
+            <MenuIcon
+              sx={{
+                color: theme.palette.warning.main,
+                width: 40,
+                height: 40,
+              }}
+            />
+          </IconButton>
+        </Stack>
       </Stack>
 
       <Drawer
@@ -182,10 +186,10 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
             width: drawerWidth,
           },
           "& .MuiDrawer-root": {
-            position: "absolute",
+            position: "fixed",
           },
           "& .MuiPaper-root": {
-            position: "absolute",
+            position: "fixed",
           },
         }}
         variant="persistent"
@@ -214,16 +218,17 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
           </IconButton>
         </DrawerHeader>
         <Stack rowGap={2} padding={2} height={"100%"}>
+          <WalletButton />
           <Link href={PATH.landing}>
             <LinkTypography selected={pathname === PATH.landing}>
               <HomeIcon /> Home
             </LinkTypography>
           </Link>
-          <Link href={PATH.profile}>
+          {/* <Link href={PATH.profile}>
             <LinkTypography selected={pathname === PATH.profile}>
               <AccountCircleIcon /> Profile
             </LinkTypography>
-          </Link>
+          </Link> */}
           {/* TODO: Make this "Events", we're just making this "Solana Breakpoint" for now */}
           <Link href={PATH.breakpoint}>
             <LinkTypography selected={pathname === PATH.breakpoint}>

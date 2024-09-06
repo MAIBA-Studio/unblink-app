@@ -1,6 +1,6 @@
 "use client";
 
-import { IconButton } from "@/components";
+import { IconButton, OutlineButton, SolidButton } from "@/components";
 import { PATH } from "@/lib/routes";
 import {
   Camera as CameraIcon,
@@ -8,13 +8,17 @@ import {
   Collections as CollectionsIcon,
 } from "@mui/icons-material";
 import { Box, Container, Stack, useTheme } from "@mui/material";
+import NextImage from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
 const BreakpointScanPage = () => {
   const theme = useTheme();
+  const router = useRouter();
   const [isFrontCamera, setIsFrontCamera] = useState(true);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const webcamRef = useRef<Webcam>(null);
 
   const videoConstraints = {
@@ -25,6 +29,15 @@ const BreakpointScanPage = () => {
     setIsFrontCamera((prev) => !prev);
   }, []);
 
+  const handleTryAgain = () => {
+    setCapturedImage(null);
+  };
+
+  const handleUseImage = () => {
+    // TODO: Call API to upload image, fill the slots of the user and count the points
+    // router.push(PATH.breakpoint);
+  };
+
   const captureImage = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
@@ -32,15 +45,16 @@ const BreakpointScanPage = () => {
       img.onload = () => {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
-        canvas.width = 512;
-        canvas.height = 512;
-        ctx?.drawImage(img, 0, 0, 512, 512);
+        canvas.width = 5120;
+        canvas.height = 5120;
+        ctx?.drawImage(img, 0, 0, 5120, 5120);
 
-        let quality = 0.7;
+        let quality = 1;
         let compressedImage = canvas.toDataURL("image/jpeg", quality);
 
-        while (compressedImage.length > 1.5 * 1024 * 1024 && quality > 0.1) {
-          quality -= 0.1;
+        // Make sure the image is less than 2MB
+        while (compressedImage.length > 2 * 1024 * 1024 && quality > 0.9) {
+          quality -= 0.02;
           compressedImage = canvas.toDataURL("image/jpeg", quality);
         }
 
@@ -49,7 +63,7 @@ const BreakpointScanPage = () => {
           compressedImage.length / 1024 / 1024,
           "MB"
         );
-        // Here you can use the compressedImage (e.g., send it to a server)
+        setCapturedImage(compressedImage);
       };
       img.src = imageSrc;
     }
@@ -73,40 +87,64 @@ const BreakpointScanPage = () => {
           overflow: "hidden",
           border: `1px solid ${theme.palette.breakpoint?.neutral[0]}`,
           borderRadius: theme.spacing(1),
-          boxShadow: 3,
+          boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.1)",
+          position: "relative",
         }}
       >
-        <Webcam
-          audio={false}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          videoConstraints={{
-            ...videoConstraints,
-            aspectRatio: 1,
-            width: 512,
-            height: 512,
-          }}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          imageSmoothing
-        />
+        {!capturedImage ? (
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            videoConstraints={{
+              ...videoConstraints,
+              aspectRatio: 1,
+              width: 1024,
+              height: 1024,
+            }}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            imageSmoothing
+          />
+        ) : (
+          <NextImage
+            src={capturedImage}
+            alt="captured"
+            fill
+            style={{
+              objectFit: "cover",
+            }}
+          />
+        )}
       </Box>
       <Stack
         flexDirection="row"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent={capturedImage ? "center" : "space-between"}
+        columnGap={2}
         width="100%"
       >
-        <Link href={PATH.breakpoint}>
-          <IconButton>
-            <CollectionsIcon sx={{ width: 24, height: 24 }} />
-          </IconButton>
-        </Link>
-        <IconButton onClick={captureImage}>
-          <CameraIcon sx={{ width: 48, height: 48 }} />
-        </IconButton>
-        <IconButton onClick={toggleCamera}>
-          <CameraswitchIcon sx={{ width: 24, height: 24 }} />
-        </IconButton>
+        {!capturedImage ? (
+          <>
+            <Link href={PATH.breakpoint}>
+              <IconButton>
+                <CollectionsIcon sx={{ width: 24, height: 24 }} />
+              </IconButton>
+            </Link>
+            <IconButton onClick={captureImage}>
+              <CameraIcon sx={{ width: 48, height: 48 }} />
+            </IconButton>
+            <IconButton onClick={toggleCamera}>
+              <CameraswitchIcon sx={{ width: 24, height: 24 }} />
+            </IconButton>
+          </>
+        ) : (
+          <>
+            <OutlineButton preset="neutral" onClick={handleTryAgain}>
+              Discard
+            </OutlineButton>
+            <SolidButton onClick={handleUseImage}>Use this</SolidButton>
+          </>
+        )}
       </Stack>
     </Container>
   );

@@ -150,7 +150,7 @@ export const OutlineButton = ({
       variant="outlined"
       preset={preset}
       sx={{
-        ...theme.typography.base.lg,
+        ...theme.typography.base.md,
         borderRadius: theme.spacing(4),
         padding: theme.spacing(1, 2.5),
         textWrap: "nowrap",

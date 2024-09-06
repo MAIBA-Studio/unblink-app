@@ -115,6 +115,7 @@ export const SolidButton = ({
       variant="contained"
       preset={preset}
       sx={{
+        ...theme.typography.base.md,
         borderRadius: theme.spacing(4),
         padding: theme.spacing(1, 2.5),
         flexWrap: "nowrap",

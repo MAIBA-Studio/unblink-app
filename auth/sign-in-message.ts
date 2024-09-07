@@ -9,7 +9,7 @@ type SignMessage = {
 };
 
 const DEFAULT_STATEMENT =
-  "To further protect your data, you are required to sign this request as proof of wallet ownership. This is request is free and will not trigger anything on-chain.";
+  "In order to enhance the security of your information, you must sign this request to verify your ownership of the wallet. This request is complimentary and will not initiate any on-chain actions.";
 
 export class SignInMessage {
   domain: string;

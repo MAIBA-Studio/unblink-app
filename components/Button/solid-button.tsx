@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, ButtonProps, styled, useTheme } from "@mui/material";
+import { Button, ButtonProps, styled, SxProps, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 
 type SolidButtonColor = "green" | "cyan" | "neutral" | "purple" | "orange";
@@ -102,11 +102,13 @@ const ColorButton = styled(Button)<ButtonProps & { preset: SolidButtonColor }>(
 interface ISolidButton extends ButtonProps {
   children: ReactNode;
   preset?: SolidButtonColor;
+  sx?: SxProps;
 }
 
 export const SolidButton = ({
   children,
   preset = "purple",
+  sx,
   ...rest
 }: ISolidButton) => {
   const theme = useTheme();
@@ -123,6 +125,7 @@ export const SolidButton = ({
         width: "fit-content",
         boxSizing: "border-box",
         flexShrink: 0,
+        ...sx,
       }}
       {...rest}
     >

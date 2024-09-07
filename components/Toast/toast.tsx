@@ -49,7 +49,7 @@ const Wrapper = styled("div")<{ alertType?: AlertType }>(
       borderRadius: "8px",
       width: "100%",
       boxShadow: "0px 4px 4px #00000040",
-      padding: theme.spacing(2),
+      padding: theme.spacing(1.5),
       gap: "12px",
     };
   }
@@ -83,7 +83,7 @@ const Title = styled(Typography, {
   }
 
   return {
-    ...theme.typography.base.md,
+    ...theme.typography.base.sm,
     color: color,
   };
 });
@@ -102,7 +102,7 @@ const MessageWrapper = styled("div")(() => ({
 
 export const Content = styled(Typography)<{ alertType?: AlertType }>(
   ({ theme }) => ({
-    ...theme.typography.button,
+    ...theme.typography.base.xs,
     display: "flex",
     flexDirection: "column",
     color: theme.palette.neutral[20],
@@ -151,7 +151,7 @@ export const Toast: FC<IToastProps> = ({
           sx={(theme) => ({
             padding: 0,
             marginLeft: theme.spacing(0.5),
-            marginTop: theme.spacing(0.5),
+
             color: theme.palette.warning.main,
             alignSelf: "flex-start",
           })}
@@ -168,7 +168,6 @@ export const Toast: FC<IToastProps> = ({
               width: "20px",
               height: "20px",
               alignSelf: "flex-start",
-              marginTop: theme.spacing(0.5),
             }}
           />
         );
@@ -183,7 +182,6 @@ export const Toast: FC<IToastProps> = ({
               width: "20px",
               height: "20px",
               alignSelf: "flex-start",
-              marginTop: theme.spacing(0.5),
             }}
           />
         );
@@ -198,7 +196,6 @@ export const Toast: FC<IToastProps> = ({
               width: "20px",
               height: "20px",
               alignSelf: "flex-start",
-              marginTop: theme.spacing(0.5),
             }}
           />
         );
@@ -213,7 +210,6 @@ export const Toast: FC<IToastProps> = ({
               width: "20px",
               height: "20px",
               alignSelf: "flex-start",
-              marginTop: theme.spacing(0.5),
             }}
           />
         );

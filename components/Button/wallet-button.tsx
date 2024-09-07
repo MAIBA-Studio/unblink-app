@@ -51,7 +51,7 @@ const StyledButton = styled(Button, {
   },
   borderRadius: theme.spacing(4),
   border: `1px solid ${theme.palette.warning.main}`,
-  padding: theme.spacing(1, 2),
+  padding: theme.spacing(1, 2.5),
   display: "inline-flex",
   gap: theme.spacing(1),
   justifyContent: "center",

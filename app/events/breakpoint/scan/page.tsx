@@ -5,7 +5,7 @@ import { PATH } from "@/lib/routes";
 import {
   Camera as CameraIcon,
   Cameraswitch as CameraswitchIcon,
-  Collections as CollectionsIcon,
+  ViewModule as ViewModuleIcon,
 } from "@mui/icons-material";
 import { Box, Container, Stack, useTheme } from "@mui/material";
 import NextImage from "next/image";
@@ -58,6 +58,8 @@ const BreakpointScanPage = () => {
           compressedImage = canvas.toDataURL("image/jpeg", quality);
         }
 
+        // Double multiplication and division by 1024 is used to convert bytes to megabytes:
+        // First 1024 converts bytes to kilobytes, second 1024 converts kilobytes to megabytes
         console.log(
           "Compressed image size:",
           compressedImage.length / 1024 / 1024,
@@ -127,7 +129,7 @@ const BreakpointScanPage = () => {
           <>
             <Link href={PATH.breakpoint}>
               <IconButton>
-                <CollectionsIcon sx={{ width: 24, height: 24 }} />
+                <ViewModuleIcon sx={{ width: 24, height: 24 }} />
               </IconButton>
             </Link>
             <IconButton onClick={captureImage}>

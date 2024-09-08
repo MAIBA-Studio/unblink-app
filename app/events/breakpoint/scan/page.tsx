@@ -40,17 +40,17 @@ const BreakpointScanPage = () => {
 
   const captureImage = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot({
-      width: 4096,
-      height: 4096,
+      width: 1080,
+      height: 1080,
     });
     if (imageSrc) {
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
-        canvas.width = 4096;
-        canvas.height = 4096;
-        ctx?.drawImage(img, 0, 0, 4096, 4096);
+        canvas.width = 1080;
+        canvas.height = 1080;
+        ctx?.drawImage(img, 0, 0, 1080, 1080);
 
         let quality = 1;
         let compressedImage = canvas.toDataURL("image/jpeg", quality);
@@ -104,11 +104,10 @@ const BreakpointScanPage = () => {
             videoConstraints={{
               ...videoConstraints,
               aspectRatio: 1,
-              width: 4096,
-              height: 4096,
+              width: 1080,
+              height: 1080,
             }}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            imageSmoothing
           />
         ) : (
           <NextImage

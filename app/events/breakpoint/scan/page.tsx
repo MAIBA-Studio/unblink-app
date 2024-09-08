@@ -101,8 +101,8 @@ const BreakpointScanPage = () => {
             videoConstraints={{
               ...videoConstraints,
               aspectRatio: 1,
-              width: 1024,
-              height: 1024,
+              width: 4096,
+              height: 4096,
             }}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
             imageSmoothing

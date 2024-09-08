@@ -9,7 +9,7 @@ export const PATH = {
   // External
   external: {
     shareOnX:
-      "https://mobile.x.com/intent/post?text=Don%27t+Blink%21+%F0%9F%91%80%0A%0A%40UnBlinkApp%0A%23MintTheMoment%0A%0A%40solana%0A%40SolanaConf%0A%23Breakpoint2024+%0A%23BreakpointBingo",
+      "https://x.com/intent/tweet?text=Don%27t%20Blink!%20%F0%9F%91%80%0A%0A%40UnBlinkApp%0A%23MintTheMoment%0A%0A%40solana%0A%40SolanaConf%0A%23Breakpoint2024%20%0A%23BreakpointBingo",
     maibaStudio: "https://maiba.studio/",
   },
 };

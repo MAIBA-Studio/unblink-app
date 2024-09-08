@@ -39,7 +39,10 @@ const BreakpointScanPage = () => {
   };
 
   const captureImage = useCallback(() => {
-    const imageSrc = webcamRef.current?.getScreenshot();
+    const imageSrc = webcamRef.current?.getScreenshot({
+      width: 4096,
+      height: 4096,
+    });
     if (imageSrc) {
       const img = new Image();
       img.onload = () => {

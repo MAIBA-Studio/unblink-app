@@ -45,9 +45,9 @@ const BreakpointScanPage = () => {
       img.onload = () => {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
-        canvas.width = 5120;
-        canvas.height = 5120;
-        ctx?.drawImage(img, 0, 0, 5120, 5120);
+        canvas.width = 2048;
+        canvas.height = 2048;
+        ctx?.drawImage(img, 0, 0, 2048, 2048);
 
         let quality = 1;
         let compressedImage = canvas.toDataURL("image/jpeg", quality);

@@ -5,6 +5,7 @@ import useProfile from "@/hooks/useProfile";
 import { PATH } from "@/lib/routes";
 import { shouldNotForwardPropsWithKeys } from "@/lib/utils";
 import { useToast } from "@/providers/toast-provider";
+import { useGlobalStore } from "@/store";
 import { useWallet } from "@jup-ag/wallet-adapter";
 import {
   ChevronLeft as ChevronLeftIcon,
@@ -23,6 +24,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -59,8 +61,11 @@ const drawerWidth = 320;
 export const AuthLayout = ({ children }: IAuthLayout) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const { connected } = useWallet();
+  const { connected, publicKey: userAddress, connecting } = useWallet();
   const { isSignedIn, profile, signIn, registerProfile } = useProfile();
+  const { setSession, setStatus, resetAuthState, setIsSignedIn } =
+    useGlobalStore();
+  const { data: session, status } = useSession();
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -133,21 +138,53 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
 
     // TODO: Need to check if this is from a scan or not. If yes, then don't push to breakpoint
     setHasTemporaryRegistered(true);
-    router.push(PATH.breakpoint);
+    !pathname.includes("/scan") && router.push(PATH.breakpoint);
   };
 
   useEffect(() => {
-    (async () => {
-      if (connected && !isSignedIn) {
+    const handleAuthState = async () => {
+      if (
+        connected &&
+        status === "unauthenticated" &&
+        !!userAddress?.toBase58()
+      ) {
         await signIn();
+      } else if (
+        !connected &&
+        !userAddress?.toBase58() &&
+        status === "authenticated"
+      ) {
+        // Reset authentication store to initial state when user disconnects
+        await signOut({ redirect: false });
+        localStorage.removeItem("userAddress");
+        setIsSignedIn(false);
+        resetAuthState();
       }
-    })();
+    };
+
+    // Only run the effect when the status is not "loading"
+    if (status !== "loading" && !connecting) {
+      handleAuthState();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected, isSignedIn]);
+  }, [connected, connecting, status, userAddress]);
+
+  // Update user session
+  useEffect(() => {
+    setSession(session);
+    setStatus(status);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session, status]);
 
   // Check if user exists, if not, show the username input first
   // TODO: Check if profile is already registered, if yes, then don't show the username input
-  if (connected && isSignedIn && !hasTemporaryRegistered) {
+  if (
+    connected &&
+    isSignedIn &&
+    status === "authenticated" &&
+    !hasTemporaryRegistered
+  ) {
     return (
       <Container>
         <Stack
@@ -246,7 +283,6 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
             width={"100%"}
           >
             <WalletButton sx={{ width: "100%" }} />
-            {/* <BitgetButton sx={{ width: "100%" }} /> */}
             {connected && !isSignedIn && (
               <SolidButton
                 preset="neutral"
@@ -272,11 +308,7 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
       style={{
         height: "100vh",
         overflowY: "auto",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        position: "relative",
       }}
     >
       {/* If the pathname includes '/scan', it is a camera page so don't show the header */}
@@ -403,7 +435,6 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
       <Box
         sx={{
           margin: !pathname.includes("/scan") ? theme.spacing(12, 0) : 0,
-          padding: theme.spacing(2),
           zIndex: 999,
         }}
       >

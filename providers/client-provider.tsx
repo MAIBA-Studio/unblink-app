@@ -12,6 +12,7 @@ import {
   SolflareWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SessionProvider as NextAuthSessionProvider } from "next-auth/react";
 import { ReactNode, useMemo } from "react";
 
 type Props = {
@@ -57,18 +58,20 @@ export const ClientProvider = ({ children }: Props) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ConnectionProvider
-        endpoint={process.env.NEXT_PUBLIC_RPC_URL ?? ""}
-        config={{
-          confirmTransactionInitialTimeout: 30000,
-          commitment: "processed",
-          disableRetryOnRateLimit: true,
-        }}
-      >
-        <UnifiedWalletProvider {...unifiedWalletProviderParams}>
-          {children}
-        </UnifiedWalletProvider>
-      </ConnectionProvider>
+      <NextAuthSessionProvider>
+        <ConnectionProvider
+          endpoint={process.env.NEXT_PUBLIC_RPC_URL ?? ""}
+          config={{
+            confirmTransactionInitialTimeout: 30000,
+            commitment: "processed",
+            disableRetryOnRateLimit: true,
+          }}
+        >
+          <UnifiedWalletProvider {...unifiedWalletProviderParams}>
+            {children}
+          </UnifiedWalletProvider>
+        </ConnectionProvider>
+      </NextAuthSessionProvider>
     </QueryClientProvider>
   );
 };

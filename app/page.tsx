@@ -16,10 +16,8 @@ export default function Home() {
         minHeight: "100vh",
         width: "100%",
         alignItems: "center",
-        justifyContent: "center",
         rowGap: theme.spacing(6),
-        marginTop: { xs: theme.spacing(6), md: 0 },
-        marginBottom: { xs: theme.spacing(12), md: 0 },
+        position: "relative",
       }}
     >
       <Stack
@@ -56,6 +54,16 @@ export default function Home() {
           Mint the moment. UnBlink.
         </Typography>
       </Stack>
+
+      <Typography
+        sx={{
+          ...theme.typography.base.xxl,
+          color: theme.palette.warning.main,
+          textAlign: "center",
+        }}
+      >
+        - - -
+      </Typography>
 
       <Stack
         rowGap={4}
@@ -95,7 +103,7 @@ export default function Home() {
             />
           </OutlineButton>
         </Link>
-        <Link href={PATH.external.shareOnX}>
+        <Link href={PATH.external.shareOnX} target="_blank">
           <Stack
             flexDirection={"row"}
             alignItems={"center"}
@@ -134,16 +142,6 @@ export default function Home() {
 
       <Typography
         sx={{
-          ...theme.typography.base.xxl,
-          color: theme.palette.warning.main,
-          textAlign: "center",
-        }}
-      >
-        - - -
-      </Typography>
-
-      <Typography
-        sx={{
           ...theme.typography.base.md,
           color: theme.palette.neutral[20],
           textAlign: "center",
@@ -154,6 +152,35 @@ export default function Home() {
         Solana, and earn royalties through shared, unfiltered photographic
         experiences.
       </Typography>
+
+      <Typography
+        sx={{
+          ...theme.typography.base.xxl,
+          color: theme.palette.warning.main,
+          textAlign: "center",
+        }}
+      >
+        - - -
+      </Typography>
+
+      <Box
+        sx={{
+          paddingBottom: theme.spacing(8),
+        }}
+      >
+        <Link href={PATH.external.maibaStudio} target="_blank">
+          <Image
+            src={"/assets/logo/maiba-studio-logo.png"}
+            alt={"Maiba Studio Logo"}
+            width={4500}
+            height={1500}
+            style={{
+              height: "100px",
+              width: "fit-content",
+            }}
+          />
+        </Link>
+      </Box>
     </Stack>
   );
 }

@@ -103,7 +103,11 @@ export default function Home() {
             />
           </OutlineButton>
         </Link>
-        <Link href={PATH.external.shareOnX} target="_blank" rel="noopener">
+        <Link
+          href={PATH.external.shareOnX}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Stack
             flexDirection={"row"}
             alignItems={"center"}
@@ -168,7 +172,11 @@ export default function Home() {
           paddingBottom: theme.spacing(8),
         }}
       >
-        <Link href={PATH.external.maibaStudio} target="_blank" rel="noopener">
+        <Link
+          href={PATH.external.maibaStudio}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Image
             src={"/assets/logo/maiba-studio-logo.png"}
             alt={"Maiba Studio Logo"}

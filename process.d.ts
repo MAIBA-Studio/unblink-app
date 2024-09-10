@@ -3,6 +3,7 @@ declare namespace NodeJS {
     NEXT_PUBLIC_NODE_ENV: "development" | "staging" | "production" | "local";
     NEXT_PUBLIC_BLOCKCHAIN_ENV: "devnet" | "testnet" | "mainnet";
     BLOCKCHAIN_ENV: "devnet" | "testnet" | "mainnet";
+    NEXT_PUBLIC_HOST_URL: string;
     NEXT_PUBLIC_RPC_URL: string;
     RPC_URL: string;
     NEXTAUTH_URL: string;

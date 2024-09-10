@@ -9,7 +9,11 @@ import {
 } from "@/services/api/profile.service";
 import { useGlobalStore } from "@/store";
 import { useConnection, useWallet } from "@jup-ag/wallet-adapter";
-import { Transaction, TransactionInstruction } from "@solana/web3.js";
+import {
+  PublicKey,
+  Transaction,
+  TransactionInstruction,
+} from "@solana/web3.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import base58 from "bs58";
 import { signIn as _signIn, getCsrfToken } from "next-auth/react";
@@ -118,7 +122,7 @@ const useProfile = () => {
           lastValidBlockHeight: lastValidBlockHeight,
         }).add(
           new TransactionInstruction({
-            programId: MEMO_PROGRAM_ID,
+            programId: new PublicKey(MEMO_PROGRAM_ID),
             keys: [
               { pubkey: wallet.publicKey, isSigner: true, isWritable: true },
             ],
@@ -134,7 +138,7 @@ const useProfile = () => {
         const memoIx =
           signedAuthTx.instructions[signedAuthTx.instructions.length - 1];
         if (
-          memoIx.programId.equals(MEMO_PROGRAM_ID) &&
+          memoIx.programId.equals(new PublicKey(MEMO_PROGRAM_ID)) &&
           memoIx.data.toString() === Buffer.from(data).toString() &&
           signedAuthTx.verifySignatures() &&
           signedAuthTx.signatures[0]

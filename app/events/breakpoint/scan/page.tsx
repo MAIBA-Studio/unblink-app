@@ -10,13 +10,11 @@ import {
 import { Box, Container, Stack, useTheme } from "@mui/material";
 import NextImage from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
 const BreakpointScanPage = () => {
   const theme = useTheme();
-  const router = useRouter();
   const [isFrontCamera, setIsFrontCamera] = useState(true);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const webcamRef = useRef<Webcam>(null);

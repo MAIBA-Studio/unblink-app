@@ -1,4 +1,9 @@
 import {
+  SOLANA_BREAKPOINT_2024_COLLECTION_MINT_DEVNET,
+  SOLANA_BREAKPOINT_2024_MERKLE_TREE_DEVNET,
+  UNBLINK_CREATOR_DEVNET,
+} from "@/lib/constants/addresses";
+import {
   mintToCollectionV1,
   mplBubblegum,
 } from "@metaplex-foundation/mpl-bubblegum";
@@ -66,7 +71,7 @@ export const POST = async (req: Request) => {
      */
 
     const collectionMint = publicKey(
-      "H172SHXwhjH2CfxA2KWrZaozAdVaBZTkqBuoSXeQMLZH"
+      SOLANA_BREAKPOINT_2024_COLLECTION_MINT_DEVNET
     );
 
     const signer = createNoopSigner(fromWeb3JsPublicKey(account));
@@ -77,7 +82,7 @@ export const POST = async (req: Request) => {
 
     const mint = mintToCollectionV1(umi, {
       leafOwner: fromWeb3JsPublicKey(account), // wallet of the minter
-      merkleTree: publicKey("MvFM3Nxp3k6C79E6q6q259aF45UAL2DF9uJLhWPvfKR"), // address of the merkle tree
+      merkleTree: publicKey(SOLANA_BREAKPOINT_2024_MERKLE_TREE_DEVNET), // address of the merkle tree
       collectionMint,
       metadata: {
         name: "Unblink - Solana Breakpoint 2024",
@@ -86,7 +91,7 @@ export const POST = async (req: Request) => {
         collection: { key: collectionMint, verified: true },
         creators: [
           {
-            address: publicKey("AqtqBLXk4NGppf5qBWgC6PSLrqEqdB2ECzWh4hVJ2qQN"),
+            address: publicKey(UNBLINK_CREATOR_DEVNET),
             verified: true,
             share: 100,
           },

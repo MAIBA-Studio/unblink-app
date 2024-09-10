@@ -1,0 +1,15 @@
+{
+  "name": "<is this unblink or the event?>",
+  "description": "<is this unblink or the event?>",
+  "image": "<is this unblink or the event?>",
+  "external_url": "<is this unblink or the event?>",
+  "properties": {
+    "files": [
+      {
+        "uri": "https://example.com/1.jpg",
+        "type": "image/jpg"
+      }
+    ],
+    "category": "image"
+  }
+}

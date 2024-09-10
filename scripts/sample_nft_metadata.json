@@ -1,0 +1,21 @@
+{
+  "name": "<is this unblink or the event?>",
+  "description": "<is this unblink or the event?>",
+  "image": "<is this unblink or the event?>",
+  "animation_url": "<is this unblink or the event?>",
+  "external_url": "<is this unblink or the event?>",
+  "attributes": [
+    {
+      "trait_type": "event",
+      "value": "<we'll remove this if above is the event already>"
+    },
+    {
+      "trait_type": "booth",
+      "value": "<booth_name>"
+    },
+    {
+      "trait_type": "unblinked_by",
+      "value": "<who captured the photo>"
+    }
+  ]
+}

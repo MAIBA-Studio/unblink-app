@@ -18,12 +18,12 @@ const config: IBlockchainConfig = {
   devnet: {
     cluster: WalletAdapterNetwork.Devnet,
     rpcUrl:
-      process.env.NEXT_PUBLIC_DEVNET_RPC_URL ||
+      process.env.NEXT_PUBLIC_RPC_URL ||
       clusterApiUrl(WalletAdapterNetwork.Devnet),
     connection: new Connection(
-      process.env.NEXT_PUBLIC_DEVNET_RPC_URL ||
+      process.env.NEXT_PUBLIC_RPC_URL ||
         clusterApiUrl(WalletAdapterNetwork.Devnet),
-      "finalized"
+      "confirmed"
     ),
     // Token
     treasuryAddress: "AFRLjPK3auBuFe9aZAjmZA39NoVbjDuitsZbELjuZzda",
@@ -36,7 +36,7 @@ const config: IBlockchainConfig = {
     connection: new Connection(
       process.env.NEXT_PUBLIC_RPC_URL ||
         clusterApiUrl(WalletAdapterNetwork.Mainnet),
-      "finalized"
+      "confirmed"
     ),
     treasuryAddress: "",
   },

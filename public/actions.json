@@ -1,0 +1,8 @@
+{
+  "rules": [
+    {
+      "pathPattern": "/actions/**",
+      "apiPath": "https://unblink.app/api/actions/**"
+    }
+  ]
+}

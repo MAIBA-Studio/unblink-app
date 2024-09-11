@@ -62,7 +62,7 @@ export const POST = async (req: Request) => {
     /**
      * TODO:
      * NOTE: Each booth sponsor should have their own API endpoint for minting, this is just a POC template
-     * 1. Fetch the image from the Supabase Database together with other metadata
+     * 1. x Fetch the image from the Supabase Database together with other metadata
      * 2. x Upload the image to Arweave
      * 3. x Construct the metadata object and upload to Arweave
      * 4. / Mint the cNFT to the collection

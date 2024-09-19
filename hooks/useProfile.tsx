@@ -43,36 +43,33 @@ const useProfile = () => {
     mutationKey: [`register-profile`],
   });
 
-  const registerProfile = async (username: string) => {
-    if (!walletAddress || !username) {
-      const errorMessage = !walletAddress
-        ? "Invalid wallet address"
-        : "Invalid username";
-      showToast("error", false, "Registration Failed", errorMessage);
-      throw new Error("Invalid username or wallet address");
-    }
-
-    showToast(
-      "info",
-      false,
-      "Registering Profile",
-      "Please do not refresh this page or close this browser tab",
-      true
-    );
-
-    const body = {
-      walletAddress,
-      username,
-    };
-
-    const res = await mutateAsync(body);
+  const registerProfile = async () => {
+    // Register the user in supabase
+    const res = await mutateAsync({ walletAddress });
 
     if (res && !(`error` in res)) {
       await queryClient.invalidateQueries({
         queryKey: [`fetch-profile`],
       });
       await refetchProfile();
+    } else {
+      showToast(
+        "error",
+        false,
+        "Error Signing In",
+        (res?.error as string) ?? "Something went wrong. Please try again."
+      );
+
+      return;
     }
+
+    showToast(
+      "info",
+      false,
+      "Successfully registered",
+      "Welcome to Breakpoint Bingo!",
+      true
+    );
 
     return res;
   };
@@ -164,6 +161,7 @@ const useProfile = () => {
         return;
       }
 
+      // Sign in with next-auth using the wallet
       await _signIn("credentials", {
         message: JSON.stringify(message),
         signature: base58.encode(signature),
@@ -172,6 +170,31 @@ const useProfile = () => {
         isLedger,
       });
 
+      // Register the user in supabase
+      const body = {
+        walletAddress,
+      };
+
+      const res = await mutateAsync(body);
+      console.log("res", res);
+
+      if (res && !(`error` in res)) {
+        await queryClient.invalidateQueries({
+          queryKey: [`fetch-profile`],
+        });
+        await refetchProfile();
+      } else {
+        showToast(
+          "error",
+          false,
+          "Error Signing In",
+          (res?.error as string) ?? "Something went wrong. Please try again."
+        );
+
+        return;
+      }
+
+      // If everything is successful, set the user address in local storage
       localStorage.setItem("userAddress", walletAddress);
 
       showToast(

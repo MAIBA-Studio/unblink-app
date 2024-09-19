@@ -6,13 +6,13 @@ export const GETRequestProfileSchema = z.object({
 
 export const POSTRequestProfileSchema = z.object({
   walletAddress: z.string(),
-  username: z.string(),
 });
 
 export const ProfileSchema = z.object({
-  walletAddress: z.string(),
-  username: z.string(),
-  points: z.number().gte(0),
+  user: z.object({
+    walletAddress: z.string(),
+    points: z.number().gte(0),
+  }),
 });
 
 export type IGETRequestProfile = z.infer<typeof GETRequestProfileSchema>;

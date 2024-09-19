@@ -71,8 +71,8 @@ export default function Home() {
         justifyContent={"center"}
         position={"relative"}
       >
-        {/* <Link href={PATH.breakpoint}> */}
-        <Box
+        <Link href={PATH.breakpoint}>
+          {/* <Box
           sx={{
             position: "absolute",
             top: theme.spacing(-2),
@@ -85,8 +85,7 @@ export default function Home() {
           }}
         >
           Soon!
-        </Box>
-        <Link href={"#"}>
+        </Box> */}
           <OutlineButton
             preset="warning"
             sx={{ padding: "32px", boxShadow: "3px 5px 0px 3px #D4A017" }}

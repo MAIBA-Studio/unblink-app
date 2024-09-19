@@ -1,6 +1,7 @@
 export const PATH = {
   landing: "/",
   profile: "/profile",
+  signIn: "/sign-in",
 
   // Events
   breakpoint: "/events/breakpoint",

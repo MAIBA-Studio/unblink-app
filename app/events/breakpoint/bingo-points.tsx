@@ -1,5 +1,7 @@
 "use client";
 
+import useProfile from "@/hooks/useProfile";
+import { shortenAddress } from "@/lib/formatters";
 import { Stack, styled, Typography } from "@mui/material";
 
 const CounterTypography = styled(Typography)(({ theme }) => ({
@@ -13,14 +15,21 @@ interface IBingoPoints {
 }
 
 export const BingoPoints = ({ points, medals }: IBingoPoints) => {
+  const { profile } = useProfile();
+
   return (
-    <Stack
-      flexDirection={"row"}
-      alignItems={"center"}
-      justifyContent={"space-between"}
-    >
-      <CounterTypography>Points: {points}</CounterTypography>
-      <CounterTypography>Medals: {medals}</CounterTypography>
+    <Stack rowGap={2}>
+      Welcome, {shortenAddress(profile?.walletAddress ?? "")}
+      <Stack
+        flexDirection={"row"}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+      >
+        <CounterTypography>Points: {profile?.points ?? 0}</CounterTypography>
+        <CounterTypography>
+          Medals: {profile?.points && profile?.points > 8 ? 1 : 0}
+        </CounterTypography>
+      </Stack>
     </Stack>
   );
 };

@@ -81,10 +81,10 @@ export const BingoMechanics = () => {
             <MechanicsTitle>Scoring</MechanicsTitle>
             <MechanicsBody>
               <List>
-                <ListItem>Row/Column/Diagonal Completion.</ListItem>
                 <ListItem>
-                  Completing 5 slots in a row, column, or diagonal earns the
-                  player 1 point.
+                  Follow the instructions on each slot to snap photos with the
+                  UnBlink App! Each 3 slots in a Row/Column/Diagonal completed
+                  earns you 1 point.
                 </ListItem>
               </List>
             </MechanicsBody>
@@ -95,8 +95,8 @@ export const BingoMechanics = () => {
             <MechanicsBody>
               <List>
                 <ListItem>
-                  The maximum score is 12 points, representing 12 possible Bingo
-                  combinations on the 5x5 card.
+                  The maximum score is 8 points, representing 8 possible Bingo
+                  combinations on the 3x3 card.
                 </ListItem>
               </List>
             </MechanicsBody>
@@ -107,7 +107,7 @@ export const BingoMechanics = () => {
             <MechanicsBody>
               <List>
                 <ListItem>
-                  Completing all 25 slots (a &apos;blackout&apos;) earns the
+                  Completing all 9 slots (a &apos;blackout&apos;) earns the
                   player a special Blackout Medal.
                 </ListItem>
               </List>
@@ -119,12 +119,14 @@ export const BingoMechanics = () => {
             <MechanicsBody>
               <List>
                 <ListItem>
-                  After the event, prizes are distributed based on the number of
+                  After the event, prizes are raffled based on the number of
                   points players have accumulated.
                 </ListItem>
                 <ListItem>
-                  A special raffle is held for all players who earned a Blackout
-                  Medal, with additional prizes awarded.
+                  A raffle entry multiplier is given for all players who earned
+                  a Blackout Medal, meaning 9 maximum points multiplied twice
+                  grants those who achieved a blackout medal gets a total of 18
+                  points/raffle entries!
                 </ListItem>
               </List>
             </MechanicsBody>

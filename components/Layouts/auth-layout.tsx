@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, SolidButton, TextInput, WalletButton } from "@/components";
+import { Container, SolidButton, WalletButton } from "@/components";
 import useProfile from "@/hooks/useProfile";
 import { PATH } from "@/lib/routes";
 import { shouldNotForwardPropsWithKeys } from "@/lib/utils";
@@ -69,7 +69,7 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [username, setUsername] = useState(profile?.username || "");
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToast();
   const router = useRouter();
@@ -118,27 +118,8 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
     await signIn();
   };
 
-  const handleChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  };
-
-  const handleSubmitProfile = async () => {
-    const res = await registerProfile(username);
-
-    if (res && `error` in res) {
-      showToast("error", false, "Registration Failed", res?.error as string);
-    } else {
-      showToast(
-        "success",
-        true,
-        "Profile Registered",
-        "You have successfully registered your profile"
-      );
-    }
-
-    // TODO: Need to check if this is from a scan or not. If yes, then don't push to breakpoint
-    setHasTemporaryRegistered(true);
-    !pathname.includes("/scan") && router.push(PATH.breakpoint);
+  const handleSignIn = async () => {
+    await signIn();
   };
 
   useEffect(() => {
@@ -179,53 +160,8 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
 
   // Check if user exists, if not, show the username input first
   // TODO: Check if profile is already registered, if yes, then don't show the username input
-  if (
-    connected &&
-    isSignedIn &&
-    status === "authenticated" &&
-    !hasTemporaryRegistered
-  ) {
-    return (
-      <Container>
-        <Stack
-          alignItems={"center"}
-          justifyContent={"center"}
-          height={"100%"}
-          rowGap={2}
-        >
-          <TextInput
-            label="Username"
-            placeholder="Enter your username"
-            value={username}
-            onChange={handleChangeUsername}
-          />
-          <Typography
-            sx={{
-              ...theme.typography.base.md,
-              color: theme.palette.neutral[20],
-            }}
-          >
-            This username will be used to identify you as the photographer of
-            all your photos. It will be included in the metadata of the Photo
-            NFT that will be minted.
-          </Typography>
 
-          <SolidButton
-            preset="orange"
-            sx={{
-              marginTop: theme.spacing(4),
-              width: "100%",
-            }}
-            onClick={handleSubmitProfile}
-          >
-            Submit
-          </SolidButton>
-        </Stack>
-      </Container>
-    );
-  }
-
-  if (!connected || !isSignedIn) {
+  if (!connected || !isSignedIn || !profile) {
     return (
       <Container>
         <Stack
@@ -294,6 +230,20 @@ export const AuthLayout = ({ children }: IAuthLayout) => {
                 }}
               >
                 Verify Ownership
+              </SolidButton>
+            )}
+
+            {connected && isSignedIn && !profile && (
+              <SolidButton
+                preset="neutral"
+                startIcon={<VerifiedUserIcon />}
+                fullWidth
+                onClick={handleSignIn}
+                sx={{
+                  width: "100%",
+                }}
+              >
+                Sign In
               </SolidButton>
             )}
           </Stack>
